@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="room-container d-flex">
+    <div class="col-8">
+        {% if request.user == room.host %}
+        <p><a href='{% url "update_room" room.id%}'> update the room</a></p>
+        <p><a href='{% url "delete_room" room.id%}'> delete room</a></p>
+        {% endif %}
+        <h1>{{room.name}}</h1>
+    <h6>{{room.topic.name}}</h6>
+    <h6>{{room.description}}</h6>
+    <hr>
+
+    <div class="convasation">
+        {% for message in room_messages  %}
+        <div>
+            {% if request.user == message.user %}
+            <a href= '{% url "delete_message" message.id %}'>Delete</a>
+            {% endif %}
+            <small>{{message.user}} {{message.created| timesince}} ago</small>
+            <p>{{message.body}}</p>
+        </div>
+        {% endfor %}
+
+        {% if request.user.is_authenticated %}
+        <div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="text" name='body' placeholder="write your message">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+      
+    </div>
+    <div class="">
+        <h5>Participents</h5>
+        {% for user in participents %}
+        <div>
+            <p>@{{user.username}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

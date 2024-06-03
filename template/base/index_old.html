@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
+<div class="home-container">
+    <div>
+      {% include "base/topic_bar.html" %}
+    </div>
+    <div>
+        <h5>{{room_count}} is available</h5>
+        {% include "base/feed.html" %}
+    </div>
+    <div>
+        {% include "base/activity_bar.html" %}
+    </div>
+</div>
+
+
+{% endblock content %}

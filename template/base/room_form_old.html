@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+ {% block content %}
+ 
+ <div>
+    <form action="" method='post'>
+        {% comment %} If action="", then the template take the same url calling it {% endcomment %}
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" value="submit">Submit</button>
+    </form>
+ </div>
+ {% endblock content %}
+
