@@ -66,7 +66,7 @@ def register_view(request):
 
 def index(request):
     q = request.GET.get("q", "")
-    topics = Topics.objects.all()
+    topics = Topics.objects.all()[0:3]
     # we get the q from the dynamic link, which is then quried using Q
     # In search, the value is passed to q, by GEt.get then it is quried
     room = Room.objects.filter(
@@ -214,3 +214,20 @@ def update_user(request):
         'form': form
     }
     return render(request, 'base/update_users.html',  context)
+
+
+def topic_page(request):
+    q = request.GET.get("q", "")
+    topic = Topics.objects.filter(name__icontains=q)
+    context = {
+        'topics': topic
+    } 
+    return render(request, 'base/topics.html', context)
+
+
+def activity_page(request):
+    room_messages = Message.objects.all()
+    context = {
+        'room_messages': room_messages
+    }
+    return render(request, "base/activity.html", context)
